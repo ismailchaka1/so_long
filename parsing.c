@@ -6,23 +6,43 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:59:10 by root              #+#    #+#             */
-/*   Updated: 2025/01/30 04:00:56 by root             ###   ########.fr       */
+/*   Updated: 2025/01/30 04:19:07 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	error_handle(t_game *game, char *line)
+void error_handle(t_game *game, char *line)
 {
-    printf("Error %s \n", line);
-    int i = 0;
-    while (i <= game->map_height)
+    int i;
+
+    printf("Error: %s\n", line);
+
+    if (game->map)
+    {
+        i = 0;
+        while (game->map[i])
+        {
+            free(game->map[i]);
+            i++;
+        }
+        free(game->map);
+    }
+
+    exit(1);
+}
+
+void free_map(t_game *game, int k)
+{
+    int i;
+
+    i = 0;
+    while (i < k)
     {
         free(game->map[i]);
         i++;
     }
     free(game->map);
-    exit(1);
 }
 void validate_map(t_game *game)
 {
@@ -132,6 +152,7 @@ void readMap(char *map)
 
     i = 0;
     game.map_width = 0;
+    game.map[game.map_height] = NULL;
     while (1)
     {
         line = get_next_line(fd);
@@ -152,12 +173,12 @@ void readMap(char *map)
         }
         else if (ft_strlen(game.map[i]) != (size_t)game.map_width)
         {
-            error_handle(&game, "Map is not rectangular");
+           free_map(&game, i);
+           printf("Error: Map is not rectangular\n");
+           exit(1);
         }
-
         i++;
     }
-    game.map[i] = NULL;
     close(fd);
     check_map(&game);
 }
