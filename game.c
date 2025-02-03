@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:28:50 by root              #+#    #+#             */
-/*   Updated: 2025/02/01 22:54:49 by root             ###   ########.fr       */
+/*   Updated: 2025/02/03 02:38:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,36 @@ int key_press(int keycode, t_game *game)
         move_player(game, game->player_x + 1, game->player_y);
     return (0);
 }
+void delay(int milliseconds)
+{
+    clock_t start_time = clock();
+    clock_t end_time = milliseconds * CLOCKS_PER_SEC / 1000 + start_time;
+    while (clock() < end_time)
+    {
+        // Busy-waiting
+    }
+}
 
-
+void zwa9_dzob(t_game *game)
+{
+    int i = 0;
+    char *line;
+    while (1)
+    {
+        line = ft_strjoin("Loading ", ft_itoa(i));
+        mlx_clear_window(game->mlx, game->win);
+        mlx_string_put(game->mlx, game->win, 32, 32, 0xFFF, line);
+        i++;
+        free(line);
+        if (i == 50)
+            break;
+        delay(80);
+    }
+    delay(700);
+    mlx_clear_window(game->mlx, game->win);
+    mlx_string_put(game->mlx, game->win, 32, 32, 0xFFF, "Loading 100");
+    delay(500);
+}
 
 void	game_init(t_game *game)
 {
@@ -107,8 +135,23 @@ void	game_init(t_game *game)
     game->moves = 0;
     game->exit_reachable = 0;
     load_textures(game);
+    zwa9_dzob(game);
     render_map(game);
     mlx_loop_hook(game->mlx, &render_map, game);
     mlx_hook(game->win, 2, 1L << 0, &key_press, game);
     mlx_loop(game->mlx);
 }
+
+// void	game_init(t_game *game)
+// {
+//     game->mlx = mlx_init();
+//     game->win = mlx_new_window(game->mlx, game->map_width * 32, game->map_height * 32, "so_long");
+//     game->player_moves = 0;
+//     game->moves = 0;
+//     game->exit_reachable = 0;
+//     load_textures(game);
+//     render_map(game);
+//     mlx_loop_hook(game->mlx, &render_map, game);
+//     mlx_hook(game->win, 2, 1L << 0, &key_press, game);
+//     mlx_loop(game->mlx);
+// }

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 18:08:30 by root              #+#    #+#             */
-/*   Updated: 2025/02/01 19:01:43 by root             ###   ########.fr       */
+/*   Updated: 2025/02/03 02:37:35 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+#include <sys/time.h>
+#include <time.h>
 # include "mlx/mlx.h"
 
 # ifndef BUFFER_SIZE
