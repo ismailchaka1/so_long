@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRC = parsing.c get_next_line.c get_next_line_utils.c game.c
+SRC = parsing.c parsing2.c utils.c get_next_line.c get_next_line_utils.c game.c game2.c
 OBJ = $(SRC:.c=.o)
 
 CC = cc
